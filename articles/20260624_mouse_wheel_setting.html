@@ -1,0 +1,131 @@
+---
+---
+<!DOCTYPE html>
+<html lang="ja">
+
+<head id="include_head">
+    <title>Windows でマウスホイールの回転方向を変える方法</title>
+
+    <meta property="og:title" content="Windows でマウスホイールの回転方向を変える方法">
+    <meta property="og:description" content="Windows 10 または 11 でマウスホイールの回転の向きを逆向きに設定する方法を記しておく。">
+
+    <!-- <meta property="og:image" content=""> -->
+    {% include head.html %}
+</head>
+
+<body>
+    {% include header.html %}
+    <div class="readable_width content_src">
+
+        <script>insert_timestamp(new Date('2026/8/22 00:00'));</script>
+
+        <h1>Windows でマウスホイールの回転方向を変える方法</h1>
+
+        <p>Windows 10 または 11 でマウスホイールの回転の向きを逆向きに設定する方法を記しておく。</p>
+
+        <h2>手順詳細</h2>
+
+        <h3>1. スクリプトを保存</h3>
+
+        <p>以下の内容を mouse_wheel_setting.ps1 として保存。文字コードは BOM 付きの UTF-8 とする。</p>
+
+        <pre><code class="language-powershell"># 管理者チェック
+if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
+    [Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Write-Warning "管理者権限で実行してください。"
+    exit
+}
+
+Write-Host "接続中のマウスを検索中..." -ForegroundColor Cyan
+
+# HID デバイスの中からマウスだけを抽出
+$devices = Get-PnpDevice -Class Mouse | Where-Object { $_.InstanceId -like "HID*" }
+
+if ($devices.Count -eq 0) {
+    Write-Host "マウスが見つかりませんでした。" -ForegroundColor Red
+    exit
+}
+
+# 一覧表示
+for ($i = 0; $i -lt $devices.Count; $i++) {
+    Write-Host "[$i] $($devices[$i].FriendlyName)  ($($devices[$i].InstanceId))"
+}
+
+# 選択
+$index = Read-Host "操作したいマウスの番号を入力してください"
+if ($index -notmatch '^\d+$' -or $index -ge $devices.Count) {
+    Write-Host "不正な番号です。" -ForegroundColor Red
+    exit
+}
+
+$target = $devices[$index]
+$instanceId = $target.InstanceId
+
+Write-Host "`n選択されたデバイス: $($target.FriendlyName)"
+Write-Host "Instance ID: $instanceId`n"
+
+# レジストリパス
+$regPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$instanceId\Device Parameters"
+
+if (-not (Test-Path $regPath)) {
+    Write-Host "レジストリパスが見つかりません: $regPath" -ForegroundColor Red
+    exit
+}
+
+# 現在値の取得
+$current = (Get-ItemProperty -Path $regPath -Name "FlipFlopWheel" -ErrorAction SilentlyContinue).FlipFlopWheel
+if ($null -eq $current) { $current = 0 }
+
+Write-Host "現在の FlipFlopWheel 値: $current"
+
+# トグル処理
+$newValue = if ($current -eq 0) { 1 } else { 0 }
+Write-Host "新しい値: $newValue に変更します..."
+
+Set-ItemProperty -Path $regPath -Name "FlipFlopWheel" -Value $newValue -Type DWord
+
+Write-Host "レジストリ更新完了。" -ForegroundColor Green
+
+# デバイス再起動（PnP 再スキャン）
+Write-Host "デバイスを再起動しています..." -ForegroundColor Cyan
+pnputil /scan-devices | Out-Null
+
+Write-Host "完了しました！マウスを抜き差ししなくても反映される可能性があります。反映されていない場合はマウスを抜き差ししてね。" -ForegroundColor Green</code></pre>
+
+        <h3>2. スクリプトを実行</h3>
+
+        <p>管理者 PowerShell にて以下のように実行。</p>
+        <pre><code>powershell -ExecutionPolicy Bypass -File .\mouse_wheel_setting.ps1</code></pre>
+        <p>ホイールの回転を逆にしたいマウスを選択するプロンプトが表示されるので、番号で指定。</p>
+
+        <h3>3. マウスの再接続</h3>
+        <p>(必要があれば) マウスを PC から外して再度接続</p>
+
+        <h2>補足</h2>
+
+        <ul>
+            <li>
+                USB 接続と Bluetooth 接続で動作することは確認済み。PS/2 接続は未確認。
+            </li>
+            <li>
+                同じ個体のマウスでも異なる USB ポートに接続すると別のハードウェアとして認識されるため、それぞれ設定が必要。
+            </li>
+            <li>
+                Windows 11 だと OS の設定画面の [Bluetooth とデバイス] > [マウス] > [スクロール方向] で回転方向を変えられるが、これだと次のような動作になる。下記の内容が問題ない場合は設定画面でスクロール方向を変更するだけで充分だと思われる。
+                <ul>
+                    <li>
+                        (リモートで接続したマウスも含めて) 全てのマウスの回転方向が変わってしまう。そのため、リモートデスクトップのサーバー側とクライアント側の両方で逆向きに設定すると、逆向きの逆向きになって打ち消されてしまう。
+                    </li>
+                    <li>
+                        「ウマ娘」の画面内でのホイールの回転向きは変わらない。
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+    {% include footer.html %}
+
+</body>
+
+</html>
