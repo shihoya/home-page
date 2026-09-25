@@ -1,164 +1,122 @@
 <!DOCTYPE html>
 <html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>500系運用表</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 1rem;
+    background: #f7f7f7;
+  }
 
-<head id="include_head">
-    <title>500系運用まとめ</title>
+  .table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    background: white;
+    max-width: 100%;
+  }
 
-    <meta property="og:title" content="500系運用まとめ">
-    <meta property="og:description" content="">
+  table {
+    border-collapse: collapse;
+    min-width: 900px;
+  }
 
-    <!-- <meta property="og:image" content=""> -->
-    {% include head.html %}
-    <style>
-        body {
-            font-family: system-ui, sans-serif;
-            margin: 0;
-            padding: 1rem;
-            background: #f7f7f7;
-        }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.6rem;
+    text-align: center;
+    white-space: nowrap;
+  }
 
-        .table-wrapper {
-            overflow-x: auto;
-            border: 1px solid #ccc;
-            background: white;
-            max-width: 100%;
-        }
+  thead th {
+    background: #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
 
-        table {
-            border-collapse: collapse;
-            min-width: 900px;
-        }
+  /* 左側固定（1列目と2列目） */
+  .sticky-col-1 {
+    position: sticky;
+    left: 0;
+    background: #fff;
+    z-index: 4;
+  }
+  .sticky-col-2 {
+    position: sticky;
+    left: 80px; /* 1列目の幅に合わせる */
+    background: #fff;
+    z-index: 4;
+  }
 
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 0.4rem 0.6rem;
-            text-align: center;
-            white-space: nowrap;
-        }
+  tbody tr:nth-child(odd) {
+    background: #fafafa;
+  }
 
-        thead th {
-            background: #f0f0f0;
-            position: sticky;
-            top: 0;
-            z-index: 3;
-        }
+  /* 下りと上りの境界線 */
+  .divider {
+    background: #e0e0e0;
+    width: 4px;
+    padding: 0 !important;
+  }
 
-        /* 左側固定（1列目と2列目） */
-        .sticky-col-1 {
-            position: sticky;
-            left: 0;
-            background: #fff;
-            z-index: 4;
-        }
+  /* 曜日色分け */
+  .sat { color: #0066cc; font-weight: bold; } /* 土曜＝青 */
+  .sun { color: #cc0000; font-weight: bold; } /* 日曜＝赤 */
+  .hol { color: #cc0000; font-weight: bold; } /* 祝日＝赤（必要なら） */
 
-        .sticky-col-2 {
-            position: sticky;
-            left: 80px;
-            /* 1列目の幅に合わせる */
-            background: #fff;
-            z-index: 4;
-        }
-
-        tbody tr:nth-child(odd) {
-            background: #fafafa;
-        }
-
-        /* 下りと上りの境界線 */
-        .divider {
-            background: #e0e0e0;
-            width: 4px;
-            padding: 0 !important;
-        }
-
-        /* 曜日色分け */
-        .sat {
-            color: #0066cc;
-            font-weight: bold;
-        }
-
-        /* 土曜＝青 */
-        .sun {
-            color: #cc0000;
-            font-weight: bold;
-        }
-
-        /* 日曜＝赤 */
-        .hol {
-            color: #cc0000;
-            font-weight: bold;
-        }
-
-        /* 祝日＝赤（必要なら） */
-    </style>
+</style>
 </head>
-
 <body>
-    {% include header.html %}
-    <div class="readable_width content_src">
-        <script>insert_timestamp(new Date('2026/9/26 00:00'));</script>
 
-        <h1>500系運用まとめ</h1>
+<h2>500系 こだま運用表</h2>
 
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="sticky-col-1">日付</th>
-                        <th class="sticky-col-2">曜</th>
+<div class="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th class="sticky-col-1">日付</th>
+      <th class="sticky-col-2">曜</th>
 
-                        <th>こだま<br />933</th>
-                        <th>こだま<br />939</th>
-                        <th>こだま<br />947</th>
-                        <th>こだま<br />957</th>
+      <th>下り 933</th>
+      <th>下り 939</th>
+      <th>下り 947</th>
+      <th>下り 957</th>
 
-                        <th class="divider"></th>
+      <th class="divider"></th>
 
-                        <th>こだま<br />940</th>
-                        <th>こだま<br />948</th>
-                        <th>こだま<br />970</th>
-                        <th>こだま<br />972</th>
-                    </tr>
-                </thead>
+      <th>上り 940</th>
+      <th>上り 948</th>
+      <th>上り 970</th>
+      <th>上り 972</th>
+    </tr>
+  </thead>
 
-                <tbody>
-                    <!-- ここに CSV を展開した <tr><td>…</td></tr> を貼る -->
-                    <!-- 例：曜日に sat / sun を付ける -->
-                    <tr>
-                        <td class="sticky-col-1">9月26日</td>
-                        <td class="sticky-col-2 sat">土</td>
-                        <td>o</td>
-                        <td>o</td>
-                        <td>x</td>
-                        <td>o</td>
-                        <td class="divider"></td>
-                        <td>x</td>
-                        <td>o</td>
-                        <td>x</td>
-                        <td>o</td>
-                    </tr>
+  <tbody>
+    <!-- ここに CSV を展開した <tr><td>…</td></tr> を貼る -->
+    <!-- 例：曜日に sat / sun を付ける -->
+    <tr>
+      <td class="sticky-col-1">9月26日</td>
+      <td class="sticky-col-2 sat">土</td>
+      <td>o</td><td>o</td><td>x</td><td>o</td>
+      <td class="divider"></td>
+      <td>x</td><td>o</td><td>x</td><td>o</td>
+    </tr>
 
-                    <tr>
-                        <td class="sticky-col-1">9月27日</td>
-                        <td class="sticky-col-2 sun">日</td>
-                        <td>o</td>
-                        <td>x</td>
-                        <td>o</td>
-                        <td>o</td>
-                        <td class="divider"></td>
-                        <td>o</td>
-                        <td>o</td>
-                        <td>o</td>
-                        <td>x</td>
-                    </tr>
+    <tr>
+      <td class="sticky-col-1">9月27日</td>
+      <td class="sticky-col-2 sun">日</td>
+      <td>o</td><td>x</td><td>o</td><td>o</td>
+      <td class="divider"></td>
+      <td>o</td><td>o</td><td>o</td><td>x</td>
+    </tr>
 
-                    <!-- 以下 CSV 全行を貼れば完成 -->
-                </tbody>
-            </table>
-        </div>
+    <!-- 以下 CSV 全行を貼れば完成 -->
+  </tbody>
+</table>
+</div>
 
-    </div>
-    {% include footer.html %}
 </body>
-
 </html>
