@@ -1,96 +1,164 @@
----
----
 <!DOCTYPE html>
 <html lang="ja">
 
 <head id="include_head">
-	<title>500系運用まとめ</title>
+    <title>500系運用まとめ</title>
 
-	<meta property="og:title" content="500系運用まとめ">
-	<meta property="og:description" content="">
+    <meta property="og:title" content="500系運用まとめ">
+    <meta property="og:description" content="">
 
-	<!-- <meta property="og:image" content=""> -->
+    <!-- <meta property="og:image" content=""> -->
     {% include head.html %}
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 0;
+            padding: 1rem;
+            background: #f7f7f7;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border: 1px solid #ccc;
+            background: white;
+            max-width: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 0.4rem 0.6rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        thead th {
+            background: #f0f0f0;
+            position: sticky;
+            top: 0;
+            z-index: 3;
+        }
+
+        /* 左側固定（1列目と2列目） */
+        .sticky-col-1 {
+            position: sticky;
+            left: 0;
+            background: #fff;
+            z-index: 4;
+        }
+
+        .sticky-col-2 {
+            position: sticky;
+            left: 80px;
+            /* 1列目の幅に合わせる */
+            background: #fff;
+            z-index: 4;
+        }
+
+        tbody tr:nth-child(odd) {
+            background: #fafafa;
+        }
+
+        /* 下りと上りの境界線 */
+        .divider {
+            background: #e0e0e0;
+            width: 4px;
+            padding: 0 !important;
+        }
+
+        /* 曜日色分け */
+        .sat {
+            color: #0066cc;
+            font-weight: bold;
+        }
+
+        /* 土曜＝青 */
+        .sun {
+            color: #cc0000;
+            font-weight: bold;
+        }
+
+        /* 日曜＝赤 */
+        .hol {
+            color: #cc0000;
+            font-weight: bold;
+        }
+
+        /* 祝日＝赤（必要なら） */
+    </style>
 </head>
 
 <body>
-	{% include header.html %}
-	<div class="readable_width content_src">
+    {% include header.html %}
+    <div class="readable_width content_src">
+        <script>insert_timestamp(new Date('2026/9/26 00:00'));</script>
 
-		<script>insert_timestamp(new Date('2026/9/26 00:00'));</script>
+        <h1>500系運用まとめ</h1>
 
-		<h1>500系運用まとめ</h1>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sticky-col-1">日付</th>
+                        <th class="sticky-col-2">曜</th>
 
-		<p>この記事は <a href="https://adventar.org/calendars/10051">Fediverse Advent Calendar 2024</a> の 12 月 6 日分になります。</p>
+                        <th>こだま<br />933</th>
+                        <th>こだま<br />939</th>
+                        <th>こだま<br />947</th>
+                        <th>こだま<br />957</th>
 
-		<div class="toc-001">
-			<div>
-				目次
-			</div>
-			<ol>
-				<li><a href="#ending">最後に</a></li>
-			</ol>
-		</div>
+                        <th class="divider"></th>
 
-                <div class="table-wrap">
-            <figure>
-                <table>
-                    <caption>保有証券一覧</caption>
-                    <tr>
-                        <th>コード</th>
-                        <th>銘柄</th>
-                        <th>保有数</th>
-                        <th>買値</th>
-                        <th>年初</th>
-                        <th>現在</th>
-                        <th>年初比</th>
+                        <th>こだま<br />940</th>
+                        <th>こだま<br />948</th>
+                        <th>こだま<br />970</th>
+                        <th>こだま<br />972</th>
                     </tr>
+                </thead>
+
+                <tbody>
+                    <!-- ここに CSV を展開した <tr><td>…</td></tr> を貼る -->
+                    <!-- 例：曜日に sat / sun を付ける -->
                     <tr>
-                        <td>9020</td>
-                        <td>東日本旅客鉄道</td>
-                        <td align="right">100</td>
-                        <td align="right">6,570</td>
-                        <td align="right">7,437</td>
-                        <td align="right">7,972</td>
-                        <td align="right">+535</td>
+                        <td class="sticky-col-1">9月26日</td>
+                        <td class="sticky-col-2 sat">土</td>
+                        <td>o</td>
+                        <td>o</td>
+                        <td>x</td>
+                        <td>o</td>
+                        <td class="divider"></td>
+                        <td>x</td>
+                        <td>o</td>
+                        <td>x</td>
+                        <td>o</td>
                     </tr>
+
                     <tr>
-                        <td>9021</td>
-                        <td>西日本旅客鉄道</td>
-                        <td align="right">100</td>
-                        <td align="right">6,000</td>
-                        <td align="right">5,820</td>
-                        <td align="right">5,831</td>
-                        <td align="right">+11</td>
+                        <td class="sticky-col-1">9月27日</td>
+                        <td class="sticky-col-2 sun">日</td>
+                        <td>o</td>
+                        <td>x</td>
+                        <td>o</td>
+                        <td>o</td>
+                        <td class="divider"></td>
+                        <td>o</td>
+                        <td>o</td>
+                        <td>o</td>
+                        <td>x</td>
                     </tr>
-                    <tr>
-                        <td>9142</td>
-                        <td>九州旅客鉄道</td>
-                        <td align="right">100</td>
-                        <td align="right">2,500</td>
-                        <td align="right">2,880</td>
-                        <td align="right">3,108</td>
-                        <td align="right">+228</td>
-                    </tr>
-                    <tr>
-                        <td>8267</td>
-                        <td>イオン</td>
-                        <td align="right">100</td>
-                        <td align="right">2,500</td>
-                        <td align="right">2,752</td>
-                        <td align="right">3,072</td>
-                        <td align="right">+320</td>
-                    </tr>
-                </table>
-                <figcaption>現在価格は 2023 年 12 月 1 日終値</figcaption>
-            </figure>
+
+                    <!-- 以下 CSV 全行を貼れば完成 -->
+                </tbody>
+            </table>
         </div>
 
-		<h2 id="ending">最後に</h2>
-
-	</div>
-	{% include footer.html %}
-	
+    </div>
+    {% include footer.html %}
 </body>
 
 </html>
