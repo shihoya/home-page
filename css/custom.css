@@ -115,26 +115,46 @@ table {
 } */
 
 .table-wrap {
+	max-width: 100%;      
+	/* 親からはみ出さない */
+	max-height: 80vh;   /* 縦にもスクロールさせる高さ（任意の値） */
 	overflow: auto;
 	/*tableをスクロールさせる*/
 	white-space: nowrap;
 	/*tableのセル内にある文字の折り返しを禁止*/
 }
 
-.table-wrap::-webkit-scrollbar {
-	/*tableにスクロールバーを追加*/
-	height: 5px;
+.table-wrap table {
+  border-collapse: collapse;
+  white-space: nowrap;  /* セル内の折り返しを防ぎ、横長を維持する */
 }
 
-.table-wrap::-webkit-scrollbar-track {
-	/*tableにスクロールバーを追加*/
-	background: #F1F1F1;
+.table-wrap th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 3;
 }
 
-.table-wrap::-webkit-scrollbar-thumb {
-	/*tableにスクロールバーを追加*/
-	background: #BCBCBC;
+.table-wrap td:first-child {
+  position: sticky;
+  left: 0;
+  background: var(--light);  /* 背景がないと下の列が透けて見える */
 }
+
+/* .table-wrap::-webkit-scrollbar { */
+	/*tableにスクロールバーを追加*/
+	/* height: 5px; */
+/* } */
+
+/* .table-wrap::-webkit-scrollbar-track { */
+	/*tableにスクロールバーを追加*/
+	/* background: #F1F1F1; */
+/* } */
+
+/* .table-wrap::-webkit-scrollbar-thumb { */
+	/*tableにスクロールバーを追加*/
+	/* background: #BCBCBC; */
+/* } */
 
 /* Spacing */
 td,
