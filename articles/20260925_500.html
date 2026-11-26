@@ -1,9 +1,8 @@
----
----
 <!DOCTYPE html>
 <html lang="ja">
 
 <head id="include_head">
+	<script src="/js/include_heads.js"></script>
   <title>500系運用まとめ</title>
 
   <meta property="og:title" content="500系運用まとめ">
@@ -102,7 +101,7 @@
 </head>
 
 <body>
-  {% include header.html %}
+  <script>insert_header();</script>
   <div class="readable_width content_src">
 
     <script>insert_timestamp(new Date('2026/9/26 00:00'));</script>
@@ -1027,7 +1026,7 @@
     </div>
 
   </div>
-  {% include footer.html %}
+  <script>insert_footer();</script>
 </body>
 
 </html>

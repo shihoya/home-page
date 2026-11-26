@@ -1,17 +1,15 @@
----
----
 <!DOCTYPE html>
 <html lang="ja">
 
 <head id="include_head">
+	<script src="/js/include_heads.js"></script>
 	<title>Shihoya's home</title>
 	<meta property="og:title" content="Shihoya's home トップページ">
 	<meta property="og:description" content="普段はマストドンに入り浸っている志保屋のホームページです。">	
-    {% include head.html %}
 </head>
 
 <body>
-	{% include header.html %}
+	<script>insert_header();</script>
 	<div class="readable_width content_src">
 
 		<h2>Articles</h2>
@@ -60,7 +58,7 @@
 		<p>Pixelfed.Tokyo : <a rel="me" href="https://pixelfed.tokyo/ARTi">@ARTi@pixelfed.tokyo</a></p>
 
 	</div>
-	{% include footer.html %}
+	<script>insert_footer();</script>
 	<script src="./js/include_headers.js"></script>
 </body>
 

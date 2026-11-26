@@ -1,19 +1,17 @@
----
----
 <!DOCTYPE html>
 <html lang="ja">
 
 <head id="include_head">
+	<script src="/js/include_heads.js"></script>
     <title>My Favorite Music in 2024</title>
     <meta property="og:title" content="My Favorite Music in 2024">
     <meta property="og:description" content="今年ハマった5曲を紹介します。">
 
     <meta property="og:image" content="https://home.shihoya.tokyo/articles/media/202411021013_card_2.png">
-    {% include head.html %}
 </head>
 
 <body>
-    {% include header.html %}
+    <script>insert_header();</script>
     <div class="readable_width content_src">
 
         <script>insert_timestamp(new Date('2024/12/1 00:00'));</script>
@@ -152,7 +150,7 @@
             年代でした。そんなこともあり、私にとって今年は CD の魅力再発見の 1 年だったように思いました。</p>
 
     </div>
-    {% include footer.html %}
+    <script>insert_footer();</script>
     
 </body>
 
